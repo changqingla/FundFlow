@@ -106,7 +106,7 @@ class VolumeTrendPage extends ConsumerWidget {
             width: 20,
           ),
         ],
-      ));
+      ),);
     }
 
     // Build stacked bar chart data
@@ -124,15 +124,15 @@ class VolumeTrendPage extends ConsumerWidget {
             rodStackItems: [
               BarChartRodStackItem(0, shanghai, AppColors.primary),
               BarChartRodStackItem(
-                  shanghai, shanghai + shenzhen, AppColors.secondary),
+                  shanghai, shanghai + shenzhen, AppColors.secondary,),
               BarChartRodStackItem(shanghai + shenzhen,
-                  shanghai + shenzhen + beijing, AppColors.warning),
+                  shanghai + shenzhen + beijing, AppColors.warning,),
             ],
             width: 24,
             borderRadius: const BorderRadius.vertical(top: Radius.circular(4)),
           ),
         ],
-      ));
+      ),);
     }
 
     return Container(
@@ -221,15 +221,15 @@ class VolumeTrendPage extends ConsumerWidget {
   }
 
   Widget _buildLegend(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
+    return const Padding(
+      padding: EdgeInsets.symmetric(horizontal: 16),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           _LegendItem(color: AppColors.primary, label: '上交所'),
-          const SizedBox(width: 24),
+          SizedBox(width: 24),
           _LegendItem(color: AppColors.secondary, label: '深交所'),
-          const SizedBox(width: 24),
+          SizedBox(width: 24),
           _LegendItem(color: AppColors.warning, label: '北交所'),
         ],
       ),

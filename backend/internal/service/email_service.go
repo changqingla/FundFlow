@@ -29,8 +29,8 @@ type emailService struct {
 	httpClient *http.Client
 }
 
-// NewEmailService 创建邮件服务
-func NewEmailService(cfg config.EmailConfig) EmailService {
+// newEmailServiceInternal 创建阿里云 DirectMail API 邮件服务（内部使用）
+func newEmailServiceInternal(cfg config.EmailConfig) *emailService {
 	return &emailService{
 		config: cfg,
 		httpClient: &http.Client{

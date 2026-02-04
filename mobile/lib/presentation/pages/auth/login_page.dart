@@ -180,7 +180,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                           ? null
                           : () {
                               setState(
-                                  () => _obscurePassword = !_obscurePassword);
+                                  () => _obscurePassword = !_obscurePassword,);
                             },
                     ),
                   ),

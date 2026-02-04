@@ -40,7 +40,7 @@ class NewsTab extends ConsumerWidget {
   }
 
   Widget _buildNewsList(
-      BuildContext context, WidgetRef ref, List<NewsItem> news) {
+      BuildContext context, WidgetRef ref, List<NewsItem> news,) {
     if (news.isEmpty) {
       return const Center(
         child: Text('暂无快讯'),

@@ -19,10 +19,10 @@ class AppConfig {
   // ============================================================
 
   /// API base URL for development environment
-  static const String devApiBaseUrl = 'http://localhost:8080/api/v1';
+  static const String devApiBaseUrl = 'http://101.126.153.146:8080/api/v1';
 
   /// API base URL for production environment
-  static const String prodApiBaseUrl = 'https://api.example.com/api/v1';
+  static const String prodApiBaseUrl = 'http://101.126.153.146:8080/api/v1';
 
   /// Whether the app is running in production mode.
   /// This is determined by the Dart VM environment.
@@ -32,7 +32,8 @@ class AppConfig {
   static String get apiBaseUrl => isProduction ? prodApiBaseUrl : devApiBaseUrl;
 
   /// Get the current environment name for debugging/logging
-  static String get environmentName => isProduction ? 'production' : 'development';
+  static String get environmentName =>
+      isProduction ? 'production' : 'development';
 
   // ============================================================
   // Network Configuration

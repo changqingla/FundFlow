@@ -25,10 +25,10 @@ class ChatBubble extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           if (!isUser) ...[
-            CircleAvatar(
+            const CircleAvatar(
               backgroundColor: AppColors.primary,
               radius: 16,
-              child: const Icon(
+              child: Icon(
                 Icons.smart_toy,
                 color: Colors.white,
                 size: 18,
@@ -77,10 +77,10 @@ class ChatBubble extends StatelessWidget {
           ),
           if (isUser) ...[
             const SizedBox(width: 8),
-            CircleAvatar(
+            const CircleAvatar(
               backgroundColor: AppColors.secondary,
               radius: 16,
-              child: const Icon(
+              child: Icon(
                 Icons.person,
                 color: Colors.white,
                 size: 18,
@@ -103,10 +103,10 @@ class TypingIndicator extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
       child: Row(
         children: [
-          CircleAvatar(
+          const CircleAvatar(
             backgroundColor: AppColors.primary,
             radius: 16,
-            child: const Icon(
+            child: Icon(
               Icons.smart_toy,
               color: Colors.white,
               size: 18,

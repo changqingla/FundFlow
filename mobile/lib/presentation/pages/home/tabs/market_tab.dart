@@ -4,7 +4,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../data/models/market.dart';
 import '../../../providers/market_provider.dart';
-import '../../../widgets/market_card.dart';
 
 /// Market tab showing global market indices
 class MarketTab extends ConsumerWidget {

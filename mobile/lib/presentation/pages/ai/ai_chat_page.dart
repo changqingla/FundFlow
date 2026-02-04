@@ -282,10 +282,10 @@ class _AIChatPageState extends ConsumerState<AIChatPage> {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          CircleAvatar(
+          const CircleAvatar(
             backgroundColor: AppColors.primary,
             radius: 16,
-            child: const Icon(
+            child: Icon(
               Icons.smart_toy,
               color: Colors.white,
               size: 18,
@@ -373,7 +373,7 @@ class _AIChatPageState extends ConsumerState<AIChatPage> {
       color: AppColors.info.withOpacity(0.1),
       child: Row(
         children: [
-          SizedBox(
+          const SizedBox(
             width: 16,
             height: 16,
             child: CircularProgressIndicator(
@@ -385,7 +385,7 @@ class _AIChatPageState extends ConsumerState<AIChatPage> {
           Expanded(
             child: Text(
               status,
-              style: TextStyle(
+              style: const TextStyle(
                 color: AppColors.info,
                 fontSize: 13,
               ),
@@ -521,7 +521,7 @@ class _AnalysisButton extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           if (isLoading)
-            SizedBox(
+            const SizedBox(
               width: 16,
               height: 16,
               child: CircularProgressIndicator(

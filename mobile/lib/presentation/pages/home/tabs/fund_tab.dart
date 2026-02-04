@@ -59,7 +59,7 @@ class FundTab extends ConsumerWidget {
   }
 
   Widget _buildFundList(
-      BuildContext context, WidgetRef ref, List<Fund> funds) {
+      BuildContext context, WidgetRef ref, List<Fund> funds,) {
     if (funds.isEmpty) {
       return Center(
         child: Column(

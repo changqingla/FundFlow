@@ -135,7 +135,7 @@ class SSEClient {
     required Dio dio,
     Duration? timeout,
   })  : _dio = dio,
-        _timeout = timeout ?? Duration(seconds: AppConfig.sseTimeout);
+        _timeout = timeout ?? const Duration(seconds: AppConfig.sseTimeout);
 
   /// Connect to an SSE endpoint and return a stream of events
   ///

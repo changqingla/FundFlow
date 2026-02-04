@@ -45,7 +45,7 @@ class ChatRequest {
       'history': history.map((m) => {
         'role': m.role,
         'content': m.content,
-      }).toList(),
+      },).toList(),
     };
   }
 }

@@ -24,7 +24,7 @@ class AppTheme {
         elevation: 0,
         centerTitle: true,
       ),
-      cardTheme: CardTheme(
+      cardTheme: CardThemeData(
         color: AppColors.surfaceLight,
         elevation: 2,
         shape: RoundedRectangleBorder(
@@ -115,7 +115,8 @@ class AppTheme {
           borderRadius: BorderRadius.circular(8),
           borderSide: const BorderSide(color: AppColors.error),
         ),
-        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+        contentPadding:
+            const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
@@ -150,7 +151,7 @@ class AppTheme {
         type: BottomNavigationBarType.fixed,
         elevation: 8,
       ),
-      tabBarTheme: const TabBarTheme(
+      tabBarTheme: const TabBarThemeData(
         labelColor: AppColors.primary,
         unselectedLabelColor: AppColors.textSecondaryLight,
         indicatorColor: AppColors.primary,
@@ -185,7 +186,7 @@ class AppTheme {
         elevation: 0,
         centerTitle: true,
       ),
-      cardTheme: CardTheme(
+      cardTheme: CardThemeData(
         color: AppColors.surfaceDark,
         elevation: 2,
         shape: RoundedRectangleBorder(
@@ -276,7 +277,8 @@ class AppTheme {
           borderRadius: BorderRadius.circular(8),
           borderSide: const BorderSide(color: AppColors.error),
         ),
-        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+        contentPadding:
+            const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
@@ -311,7 +313,7 @@ class AppTheme {
         type: BottomNavigationBarType.fixed,
         elevation: 8,
       ),
-      tabBarTheme: const TabBarTheme(
+      tabBarTheme: const TabBarThemeData(
         labelColor: AppColors.primaryLight,
         unselectedLabelColor: AppColors.textSecondaryDark,
         indicatorColor: AppColors.primaryLight,

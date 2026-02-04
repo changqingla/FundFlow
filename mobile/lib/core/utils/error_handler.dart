@@ -416,7 +416,7 @@ class ErrorHandler {
     ErrorType type;
     String userMessage;
     ErrorSeverity severity;
-    int? statusCode = error.response?.statusCode;
+    final int? statusCode = error.response?.statusCode;
 
     switch (error.type) {
       case DioExceptionType.connectionTimeout:

@@ -67,13 +67,24 @@ type JWTConfig struct {
 	Issuer           string `mapstructure:"issuer"`
 }
 
-// EmailConfig 阿里云邮件配置
+// EmailConfig 邮件配置（支持阿里云 DirectMail API 和 SMTP）
 type EmailConfig struct {
+	// 阿里云 DirectMail API 配置
 	AccessKeyID     string `mapstructure:"access_key_id"`
 	AccessKeySecret string `mapstructure:"access_key_secret"`
 	AccountName     string `mapstructure:"account_name"`
 	FromAlias       string `mapstructure:"from_alias"`
 	Region          string `mapstructure:"region"`
+	
+	// SMTP 配置
+	SMTPHost     string `mapstructure:"smtp_host"`
+	SMTPPort     int    `mapstructure:"smtp_port"`
+	SMTPUsername string `mapstructure:"smtp_username"`
+	SMTPPassword string `mapstructure:"smtp_password"`
+	SMTPUseSSL   bool   `mapstructure:"smtp_use_ssl"`
+	
+	// 邮件服务类型: "api" (DirectMail API) 或 "smtp" (SMTP)
+	Type string `mapstructure:"type"`
 }
 
 // LLMConfig LLM API 配置
@@ -155,6 +166,12 @@ func setDefaults() {
 	// Log
 	viper.SetDefault("log.level", "info")
 	viper.SetDefault("log.format", "json")
+
+	// Email
+	viper.SetDefault("email.type", "smtp") // 默认使用 SMTP
+	viper.SetDefault("email.smtp_port", 465)
+	viper.SetDefault("email.smtp_use_ssl", true)
+	viper.SetDefault("email.from_alias", "基金分析助手")
 
 	// LLM
 	viper.SetDefault("llm.timeout", 120)

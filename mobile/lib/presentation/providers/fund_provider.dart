@@ -53,10 +53,10 @@ class FundListNotifier extends StateNotifier<FundListState> {
     try {
       final repository = _ref.read(fundRepositoryProvider);
       final funds = await repository.getFunds();
-      
+
       // Sync to local storage
       await _syncToLocalStorage(funds);
-      
+
       state = state.copyWith(funds: funds, isLoading: false);
     } catch (e) {
       // Try to load from local cache on error
@@ -84,10 +84,10 @@ class FundListNotifier extends StateNotifier<FundListState> {
     try {
       final repository = _ref.read(fundRepositoryProvider);
       final fund = await repository.addFund(code);
-      
+
       // Add to local storage
       await _saveFundToLocal(fund);
-      
+
       // Update state
       state = state.copyWith(
         funds: [...state.funds, fund],
@@ -106,10 +106,10 @@ class FundListNotifier extends StateNotifier<FundListState> {
     try {
       final repository = _ref.read(fundRepositoryProvider);
       await repository.deleteFund(code);
-      
+
       // Remove from local storage
       await _deleteFundFromLocal(code);
-      
+
       state = state.copyWith(
         funds: state.funds.where((f) => f.code != code).toList(),
         isLoading: false,
@@ -126,10 +126,10 @@ class FundListNotifier extends StateNotifier<FundListState> {
     try {
       final repository = _ref.read(fundRepositoryProvider);
       await repository.updateHoldStatus(code, isHold);
-      
+
       // Update local storage
       await _updateLocalHoldStatus(code, isHold);
-      
+
       state = state.copyWith(
         funds: state.funds.map((f) {
           if (f.code == code) {
@@ -150,10 +150,10 @@ class FundListNotifier extends StateNotifier<FundListState> {
     try {
       final repository = _ref.read(fundRepositoryProvider);
       await repository.updateSectors(code, sectors);
-      
+
       // Update local storage
       await _updateLocalSectors(code, sectors);
-      
+
       state = state.copyWith(
         funds: state.funds.map((f) {
           if (f.code == code) {
@@ -189,15 +189,18 @@ class FundListNotifier extends StateNotifier<FundListState> {
 
   Future<void> _syncToLocalStorage(List<Fund> funds) async {
     try {
-      final storage = _ref.read(localStorageProvider);
-      final localFunds = funds.map((f) => FundLocalHive()
-        ..code = f.code
-        ..name = f.name
-        ..fundKey = f.fundKey
-        ..isHold = f.isHold
-        ..sectors = f.sectors
-        ..createdAt = DateTime.now()
-        ..updatedAt = DateTime.now()).toList();
+      final storage = _ref.read(localStorageServiceProvider);
+      final localFunds = funds
+          .map((f) => FundLocalHive(
+                code: f.code,
+                name: f.name,
+                fundKey: f.fundKey,
+                isHold: f.isHold,
+                sectors: f.sectors,
+                createdAt: DateTime.now(),
+                updatedAt: DateTime.now(),
+              ))
+          .toList();
       await storage.saveFunds(localFunds);
     } catch (_) {
       // Ignore local storage errors
@@ -206,15 +209,19 @@ class FundListNotifier extends StateNotifier<FundListState> {
 
   List<Fund> _loadFromLocalStorage() {
     try {
-      final storage = _ref.read(localStorageProvider);
+      final storage = _ref.read(localStorageServiceProvider);
       final localFunds = storage.getAllFunds();
-      return localFunds.map((f) => Fund(
-        code: f.code,
-        name: f.name,
-        fundKey: f.fundKey,
-        isHold: f.isHold,
-        sectors: f.sectors,
-      )).toList();
+      return localFunds
+          .map(
+            (f) => Fund(
+              code: f.code,
+              name: f.name,
+              fundKey: f.fundKey,
+              isHold: f.isHold,
+              sectors: f.sectors,
+            ),
+          )
+          .toList();
     } catch (_) {
       return [];
     }
@@ -222,15 +229,16 @@ class FundListNotifier extends StateNotifier<FundListState> {
 
   Future<void> _saveFundToLocal(Fund fund) async {
     try {
-      final storage = _ref.read(localStorageProvider);
-      await storage.saveFund(FundLocalHive()
-        ..code = fund.code
-        ..name = fund.name
-        ..fundKey = fund.fundKey
-        ..isHold = fund.isHold
-        ..sectors = fund.sectors
-        ..createdAt = DateTime.now()
-        ..updatedAt = DateTime.now());
+      final storage = _ref.read(localStorageServiceProvider);
+      await storage.saveFund(FundLocalHive(
+        code: fund.code,
+        name: fund.name,
+        fundKey: fund.fundKey,
+        isHold: fund.isHold,
+        sectors: fund.sectors,
+        createdAt: DateTime.now(),
+        updatedAt: DateTime.now(),
+      ));
     } catch (_) {
       // Ignore local storage errors
     }
@@ -238,7 +246,7 @@ class FundListNotifier extends StateNotifier<FundListState> {
 
   Future<void> _deleteFundFromLocal(String code) async {
     try {
-      final storage = _ref.read(localStorageProvider);
+      final storage = _ref.read(localStorageServiceProvider);
       await storage.deleteFund(code);
     } catch (_) {
       // Ignore local storage errors
@@ -247,7 +255,7 @@ class FundListNotifier extends StateNotifier<FundListState> {
 
   Future<void> _updateLocalHoldStatus(String code, bool isHold) async {
     try {
-      final storage = _ref.read(localStorageProvider);
+      final storage = _ref.read(localStorageServiceProvider);
       await storage.updateHoldStatus(code, isHold);
     } catch (_) {
       // Ignore local storage errors
@@ -256,7 +264,7 @@ class FundListNotifier extends StateNotifier<FundListState> {
 
   Future<void> _updateLocalSectors(String code, List<String> sectors) async {
     try {
-      final storage = _ref.read(localStorageProvider);
+      final storage = _ref.read(localStorageServiceProvider);
       await storage.updateSectors(code, sectors);
     } catch (_) {
       // Ignore local storage errors

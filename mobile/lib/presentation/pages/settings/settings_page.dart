@@ -6,6 +6,7 @@ import 'package:package_info_plus/package_info_plus.dart';
 import '../../../core/router/app_router.dart';
 import '../../providers/auth_provider.dart';
 import '../../providers/theme_provider.dart';
+import '../auth/login_page.dart';
 
 /// Settings page
 ///
@@ -108,7 +109,10 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
   }
 
   Widget _buildUserInfoCard(
-      BuildContext context, dynamic user, AuthState authState) {
+    BuildContext context,
+    dynamic user,
+    AuthState authState,
+  ) {
     return Card(
       margin: const EdgeInsets.symmetric(horizontal: 16),
       child: Padding(
@@ -119,8 +123,9 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
             CircleAvatar(
               radius: 40,
               backgroundColor: Theme.of(context).colorScheme.primaryContainer,
-              backgroundImage:
-                  user?.avatarUrl != null ? NetworkImage(user!.avatarUrl!) : null,
+              backgroundImage: user?.avatarUrl != null
+                  ? NetworkImage(user!.avatarUrl!)
+                  : null,
               child: user?.avatarUrl == null
                   ? Icon(
                       Icons.person,
@@ -152,7 +157,8 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
             if (authState.isAuthenticated) ...[
               const SizedBox(height: 12),
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
                 decoration: BoxDecoration(
                   color: Colors.green.withOpacity(0.1),
                   borderRadius: BorderRadius.circular(12),
@@ -299,10 +305,10 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
             subtitle: Text('v$_appVersion ($_buildNumber)'),
           ),
           const Divider(height: 1),
-          ListTile(
-            leading: const Icon(Icons.description_outlined),
-            title: const Text('应用名称'),
-            subtitle: const Text('基金投资分析工具'),
+          const ListTile(
+            leading: Icon(Icons.description_outlined),
+            title: Text('应用名称'),
+            subtitle: Text('基金投资分析工具'),
           ),
         ],
       ),

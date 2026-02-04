@@ -83,7 +83,7 @@ class _FundDetailPageState extends ConsumerState<FundDetailPage> {
     final valuation = fund.valuation;
     final dayGrowth = valuation != null
         ? double.tryParse(
-                valuation.dayGrowth.replaceAll('%', '').replaceAll('+', '')) ??
+                valuation.dayGrowth.replaceAll('%', '').replaceAll('+', ''),) ??
             0
         : 0.0;
     final isUp = dayGrowth >= 0;
@@ -294,7 +294,7 @@ class _FundDetailPageState extends ConsumerState<FundDetailPage> {
                   return Chip(
                     label: Text(sector),
                     backgroundColor: AppColors.primary.withOpacity(0.1),
-                    labelStyle: TextStyle(color: AppColors.primary),
+                    labelStyle: const TextStyle(color: AppColors.primary),
                     deleteIcon: const Icon(Icons.close, size: 18),
                     onDeleted: () => _removeSector(fund, sector),
                   );
@@ -566,7 +566,7 @@ class _SectorEditorSheetState extends ConsumerState<_SectorEditorSheet> {
                     return Chip(
                       label: Text(sector),
                       backgroundColor: AppColors.primary.withOpacity(0.1),
-                      labelStyle: TextStyle(color: AppColors.primary),
+                      labelStyle: const TextStyle(color: AppColors.primary),
                       deleteIcon: const Icon(Icons.close, size: 18),
                       onDeleted: () {
                         setState(() {

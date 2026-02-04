@@ -1,0 +1,119 @@
+version: '3.8'
+
+services:
+  # PostgreSQL 数据库
+  postgres:
+    image: postgres:15-alpine
+    container_name: fund-analyzer-postgres
+    environment:
+      POSTGRES_DB: fund_analyzer
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-postgres123}
+      POSTGRES_INITDB_ARGS: "-E UTF8"
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./backend/migrations:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - fund-analyzer-network
+
+  # Redis 缓存
+  redis:
+    image: redis:7-alpine
+    container_name: fund-analyzer-redis
+    command: redis-server --appendonly yes
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - fund-analyzer-network
+
+  # 后端服务
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: fund-analyzer-backend
+    environment:
+      # 服务器配置
+      FUND_SERVER_PORT: 8080
+      FUND_SERVER_MODE: release
+      
+      # 数据库配置
+      FUND_DATABASE_HOST: postgres
+      FUND_DATABASE_PORT: 5432
+      FUND_DATABASE_USER: postgres
+      FUND_DATABASE_PASSWORD: ${DB_PASSWORD:-postgres123}
+      FUND_DATABASE_DBNAME: fund_analyzer
+      FUND_DATABASE_SSLMODE: disable
+      
+      # Redis 配置
+      FUND_REDIS_HOST: redis
+      FUND_REDIS_PORT: 6379
+      FUND_REDIS_PASSWORD: ""
+      FUND_REDIS_DB: 0
+      
+      # JWT 配置
+      FUND_JWT_SECRET: ${JWT_SECRET:-change-this-secret-in-production}
+      FUND_JWT_ACCESS_EXPIRE_MIN: 1440
+      FUND_JWT_REFRESH_EXPIRE_DAY: 7
+      
+      # 邮件配置
+      FUND_EMAIL_TYPE: ${EMAIL_TYPE:-smtp}
+      FUND_EMAIL_SMTP_HOST: ${SMTP_HOST:-smtpdm.aliyun.com}
+      FUND_EMAIL_SMTP_PORT: ${SMTP_PORT:-465}
+      FUND_EMAIL_SMTP_USERNAME: ${SMTP_USERNAME:-}
+      FUND_EMAIL_SMTP_PASSWORD: ${SMTP_PASSWORD:-}
+      FUND_EMAIL_SMTP_USE_SSL: ${SMTP_USE_SSL:-true}
+      FUND_EMAIL_FROM_ALIAS: ${SMTP_FROM_NAME:-基金分析助手}
+      
+      # LLM 配置
+      FUND_LLM_BASE_URL: ${LLM_BASE_URL:-https://api.openai.com/v1}
+      FUND_LLM_API_KEY: ${LLM_API_KEY:-}
+      FUND_LLM_MODEL: ${LLM_MODEL:-gpt-4}
+      FUND_LLM_TIMEOUT: 120
+      
+      # 日志配置
+      FUND_LOG_LEVEL: info
+      FUND_LOG_FORMAT: json
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./backend/config.yaml:/root/config.yaml:ro
+      - ./cache:/root/cache
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    restart: unless-stopped
+    networks:
+      - fund-analyzer-network
+
+volumes:
+  postgres_data:
+    driver: local
+  redis_data:
+    driver: local
+
+networks:
+  fund-analyzer-network:
+    driver: bridge

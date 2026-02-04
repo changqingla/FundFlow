@@ -121,7 +121,7 @@ class TokenManager {
     if (expiresAt == null) return true;
 
     final now = DateTime.now();
-    final threshold = Duration(seconds: AppConfig.tokenRefreshThreshold);
+    const threshold = Duration(seconds: AppConfig.tokenRefreshThreshold);
     final refreshTime = expiresAt.subtract(threshold);
 
     return now.isAfter(refreshTime);

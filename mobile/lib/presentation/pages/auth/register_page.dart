@@ -361,7 +361,7 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
                     ? null
                     : () {
                         setState(() =>
-                            _obscureConfirmPassword = !_obscureConfirmPassword);
+                            _obscureConfirmPassword = !_obscureConfirmPassword,);
                       },
               ),
             ),
@@ -526,14 +526,14 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
             color: AppColors.info.withOpacity(0.1),
             borderRadius: BorderRadius.circular(8),
           ),
-          child: Row(
+          child: const Row(
             children: [
               Icon(
                 Icons.info_outline,
                 color: AppColors.info,
                 size: 20,
               ),
-              const SizedBox(width: 8),
+              SizedBox(width: 8),
               Expanded(
                 child: Text(
                   '验证码有效期为10分钟，请尽快完成验证',

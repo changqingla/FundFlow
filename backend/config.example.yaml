@@ -30,11 +30,22 @@ jwt:
   issuer: fund-analyzer
 
 email:
-  access_key_id: your_aliyun_access_key_id
-  access_key_secret: your_aliyun_access_key_secret
-  account_name: noreply@yourdomain.com
+  # 邮件服务类型: "api" (阿里云 DirectMail API) 或 "smtp" (SMTP)
+  type: smtp
+  
+  # SMTP 配置（推荐）
+  smtp_host: smtpdm.aliyun.com
+  smtp_port: 465
+  smtp_username: no-reply@yourdomain.com
+  smtp_password: your_smtp_password
+  smtp_use_ssl: true
   from_alias: 基金分析助手
-  region: cn-hangzhou
+  
+  # 阿里云 DirectMail API 配置（可选，如果 type 为 "api"）
+  # access_key_id: your_aliyun_access_key_id
+  # access_key_secret: your_aliyun_access_key_secret
+  # account_name: noreply@yourdomain.com
+  # region: cn-hangzhou
 
 llm:
   base_url: https://api.openai.com/v1

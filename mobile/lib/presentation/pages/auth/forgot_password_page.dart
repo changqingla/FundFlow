@@ -443,7 +443,7 @@ class _ForgotPasswordPageState extends ConsumerState<ForgotPasswordPage> {
                     ? null
                     : () {
                         setState(
-                            () => _obscureNewPassword = !_obscureNewPassword);
+                            () => _obscureNewPassword = !_obscureNewPassword,);
                       },
               ),
             ),
@@ -475,7 +475,7 @@ class _ForgotPasswordPageState extends ConsumerState<ForgotPasswordPage> {
                     ? null
                     : () {
                         setState(() =>
-                            _obscureConfirmPassword = !_obscureConfirmPassword);
+                            _obscureConfirmPassword = !_obscureConfirmPassword,);
                       },
               ),
             ),
@@ -519,14 +519,14 @@ class _ForgotPasswordPageState extends ConsumerState<ForgotPasswordPage> {
               color: AppColors.info.withOpacity(0.1),
               borderRadius: BorderRadius.circular(8),
             ),
-            child: Row(
+            child: const Row(
               children: [
                 Icon(
                   Icons.info_outline,
                   color: AppColors.info,
                   size: 20,
                 ),
-                const SizedBox(width: 8),
+                SizedBox(width: 8),
                 Expanded(
                   child: Text(
                     '验证码有效期为10分钟，请尽快完成重置',
@@ -552,7 +552,7 @@ class _ForgotPasswordPageState extends ConsumerState<ForgotPasswordPage> {
         const SizedBox(height: 60),
 
         // Success icon
-        Icon(
+        const Icon(
           Icons.check_circle_outline,
           size: 100,
           color: AppColors.success,

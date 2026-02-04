@@ -320,7 +320,7 @@ class MinuteChartPage extends ConsumerWidget {
             borderRadius: const BorderRadius.vertical(top: Radius.circular(2)),
           ),
         ],
-      ));
+      ),);
     }
 
     if (barGroups.isEmpty) {

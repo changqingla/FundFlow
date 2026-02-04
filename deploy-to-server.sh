@@ -74,7 +74,7 @@ echo -e "${GREEN}✓ 配置文件检查完成${NC}"
 # 步骤 4: 构建 Docker 镜像
 echo ""
 echo -e "${GREEN}步骤 4/5: 构建 Docker 镜像${NC}"
-docker-compose build || {
+docker compose build || {
     echo -e "${RED}Docker 镜像构建失败！${NC}"
     exit 1
 }
@@ -83,7 +83,7 @@ echo -e "${GREEN}✓ Docker 镜像构建成功${NC}"
 # 步骤 5: 启动服务
 echo ""
 echo -e "${GREEN}步骤 5/5: 启动服务${NC}"
-docker-compose up -d || {
+docker compose up -d || {
     echo -e "${RED}服务启动失败！${NC}"
     exit 1
 }
@@ -95,7 +95,7 @@ sleep 5
 # 检查服务状态
 echo ""
 echo -e "${GREEN}检查服务状态...${NC}"
-docker-compose ps
+docker compose ps
 
 # 检查健康状态
 echo ""
@@ -107,7 +107,7 @@ for i in {1..10}; do
     fi
     if [ $i -eq 10 ]; then
         echo -e "${RED}API 服务启动超时${NC}"
-        echo "查看日志: docker-compose logs backend"
+        echo "查看日志: docker compose logs backend"
         exit 1
     fi
     echo "等待 API 启动... ($i/10)"
@@ -134,9 +134,9 @@ echo "  主机: 101.126.153.146:6378"
 echo "  数据库: 1 (独立的 DB，不影响其他项目)"
 echo ""
 echo "常用命令:"
-echo "  查看日志: docker-compose logs -f backend"
-echo "  重启服务: docker-compose restart"
-echo "  停止服务: docker-compose down"
-echo "  查看状态: docker-compose ps"
+echo "  查看日志: docker compose logs -f backend"
+echo "  重启服务: docker compose restart"
+echo "  停止服务: docker compose down"
+echo "  查看状态: docker compose ps"
 echo ""
 echo -e "${GREEN}部署完成！${NC}"
